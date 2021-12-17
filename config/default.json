@@ -1,7 +1,7 @@
 {
     "port": 4000,
     "jwtSecret": "maxim",
-    "mongoUri": "mongodb+srv://themaxopti:456852@cluster0.dlrdo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongoUri": "mongodb+srv://themaxopti:456852@cluster0.dlrdo.mongodb.net/vaip?retryWrites=true&w=majority",
     "API_URL": "http://localhost:4000",
     "CLIENT_URL": "https://www.google.com/",
     "SMTP_USER": "nosigarets@gmail.com",
