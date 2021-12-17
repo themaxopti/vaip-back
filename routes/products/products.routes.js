@@ -36,6 +36,15 @@ router.get('/sticks/all', productController.allSticks)
 // Sticks
 
 
+router.get('/sticks/test', async (req,res) => {
+    try{
+        res.json({message:'Все ок'})
+    }catch(e){
+
+    }
+})
+
+
 // Random items
 router.get('/products/random', productController.randomProduct)
 // Random items
