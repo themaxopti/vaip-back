@@ -1,0 +1,10 @@
+{
+    "port": 4000,
+    "jwtSecret": "maxim",
+    "mongoUri": "mongodb+srv://themaxopti:456852@cluster0.dlrdo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "API_URL": "http://localhost:4000",
+    "CLIENT_URL": "https://www.google.com/",
+    "SMTP_USER": "nosigarets@gmail.com",
+    "SMTP_PASSWORD": "456852852456",
+    "STATIC_PATH":"D:\\WEB\\1js\\vaip\\server\\static"
+}
