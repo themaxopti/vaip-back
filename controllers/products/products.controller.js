@@ -178,15 +178,16 @@ exports.getOneProduct = async (req, res) => {
         const vape = await Vape.findOne({ _id: id })
         const iqos = await Iqos.findOne({ _id: id })
         const lilSolid = await LilSolid.findOne({ _id: id })
+        const embalisment = await Embalishment.findOne({ _id: id })
 
         if (stick) return res.json(stick)
         if (vape) return res.json(vape)
         if (iqos) return res.json(iqos)
         if (lilSolid) return res.json(lilSolid)
+        if (embalisment) return res.json(embalisment)
 
 
-
-        res.json({message:"Такого товара не найдено"})
+        res.json({ message: "Такого товара не найдено" })
 
 
     } catch (e) {
