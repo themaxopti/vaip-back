@@ -95,21 +95,21 @@ exports.showPanierProducts = async (req, res) => {
     try {
         const { panierId } = req.params
 
-        const productService = new ProductService(productId)
+        const productService = new ProductService(panierId)
         const checkedProduct = await productService.getAllProductSchema()
 
         if (!checkedProduct) return res.json({ message: "Такого товара нету в базе" })
 
         const userId = req.user.userId
 
-        const isPanier = await Panier.findOne({ userId, products: { $eq: productId } })
+        const isPanier = await Panier.findOne({ userId, products: { $eq: panierId } })
 
         if(!isPanier) return res.json({message:"Такого товара нет в корзине"})
 
 
         const countProduct = checkedProduct.value
 
-        const panier = await Panier.findOneAndUpdate({ userId }, { $pull: { products: productId }, $inc: { totalCount: -countProduct } }, { new: true })
+        const panier = await Panier.findOneAndUpdate({ userId }, { $pull: { products: panierId }, $inc: { totalCount: -countProduct } }, { new: true })
 
 
 

@@ -33,13 +33,6 @@ exports.register = async (req, res) => {
             })
         }
 
-        const candidateName = await User.findOne({ name })
-
-        if (candidateName) {
-            return res.json({
-                message: "Такой пользолватель уже существует"
-            })
-        }
 
         const hashedPassword = await bcrypt.hash(password, 12)
         const secretLink = uuid.v4()
