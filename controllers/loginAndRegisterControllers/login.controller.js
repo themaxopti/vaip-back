@@ -70,7 +70,7 @@ exports.auth = async (req, res) => {
 
         res.json({
             userId: user.id,
-            userName: user.userName,
+            userName: user.name,
             userEmail: user.email,
             father: user.father,
             phone: user.phone,
