@@ -9,9 +9,10 @@ exports.changeUser = async (req, res) => {
 
         const user = await User.findOne({_id:userId})
 
-        if(!user.isActivated){
-            return res.json({message:"Активируйте аккаунт"})
-        }
+        // if(!user.isActivated){
+        //     return res.json({message:"Активируйте аккаунт"})
+        // }
+        
 
         const { name, email, phone, surname, father } = req.body
 
