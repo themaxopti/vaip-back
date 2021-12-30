@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const Cors = require('cors')
 const path = require('path')
 const config = require('config')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
@@ -23,7 +24,7 @@ app.use('/api/',require('./routes/pannier/pannier.routes'))
 
 
 app.use(express.static(__dirname + "/static"));
-
+app.use(cookieParser())
 
 async function start() {
     try {
