@@ -70,7 +70,7 @@ exports.auth = async (req, res) => {
             return res.status(400).json({ message: 'Пользователь не найден' })
         }
 
-
+        console.log(req.cookies)
 
         res.json({
             token:req.cookies,
