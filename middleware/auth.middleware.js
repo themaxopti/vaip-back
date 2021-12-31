@@ -9,12 +9,14 @@ module.exports = (req, res, next) => {
     }
 
     try {
+        const tokenCookie = req.cookies.token
+        console.log(tokenCookie)
         const token = req.headers.authorization.split(' ')[1]
-        if(!token) {
+        if(!tokenCookie) {
             return res.json({message:'Вы не авторизованы'})
         }
 
-        const decoded = jwt.verify(token,config.get('jwtSecret'))
+        const decoded = jwt.verify(tokenCookie,config.get('jwtSecret'))
         // console.log(decoded)
 
         req.user = decoded
