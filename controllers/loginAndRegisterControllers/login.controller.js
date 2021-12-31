@@ -41,8 +41,9 @@ exports.login = async (req, res) => {
             { expiresIn: '1h' }
         )
 
-    
-    res.cookie('token',token,{maxAge:10 * 24 * 60 * 60 * 1000,httpOnly:true})
+
+        res.cookie('token', token, { maxAge: 10 * 24 * 60 * 60 * 1000, httpOnly: true })
+
         res.json({
             token, userId: user.id,
             userName: user.name,
@@ -70,7 +71,9 @@ exports.auth = async (req, res) => {
         }
 
 
+
         res.json({
+            token:req.cookies,
             userId: user.id,
             userName: user.name,
             userEmail: user.email,

@@ -7,24 +7,26 @@ const config = require('config')
 const cookieParser = require('cookie-parser')
 
 const app = express()
+app.use(cookieParser('secret key'))
 
-app.use(Cors({credentials:true,origin:'http://localhost:3000'}))
+app.use(Cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json({ extended: true }))
 
 const filePathMiddleware = require('./middleware/filePath.middleware')
-app.use(filePathMiddleware(path.resolve(__dirname,'files')))
+app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 
 // ROUTES
-app.use('/api/',require('./routes/user.routes'))
-app.use('/api/',require('./routes/loginAndRegister/register.routes'))
-app.use('/api/',require('./routes/loginAndRegister/login.routes'))
-app.use('/api/',require('./routes/products/products.routes'))
-app.use('/api/',require('./routes/pannier/pannier.routes'))
+app.use('/api/', require('./routes/user.routes'))
+app.use('/api/', require('./routes/loginAndRegister/register.routes'))
+app.use('/api/', require('./routes/loginAndRegister/login.routes'))
+app.use('/api/', require('./routes/products/products.routes'))
+app.use('/api/', require('./routes/pannier/pannier.routes'))
+app.use('/api/', require('./routes/cookie/cookie.routes'))
+
 // ROUTES
 
 
 app.use(express.static(__dirname + "/static"));
-app.use(cookieParser())
 
 async function start() {
     try {
@@ -44,6 +46,21 @@ start()
 
 const PORT = process.env.PORT || config.get('port')
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`server has been started on port ${PORT}`)
 })
+
+
+
+
+
+app.get('get-cookie', (req, res) => {
+    console.log('Cookie: ', req.cookies)
+    res.send('Get Cookie')
+})
+
+app.get('set-cookie', (req, res) => {
+    res.cookie('token', '12345ABCDE')
+    res.send('Set Cookie')
+})
+
