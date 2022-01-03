@@ -10,7 +10,7 @@ const app = express()
 
 app.use(Cors({ credentials: true, origin: 'http://localhost:3000' }))
 app.use(express.json({ extended: true }))
-app.use(cookieParser('secret key'))
+app.use(cookieParser())
 
 const filePathMiddleware = require('./middleware/filePath.middleware')
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
