@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/getCookie', (req, res) => {
     console.log('Cookie: ', req.cookies)
-    res.send('Get Cookie')
+    res.send(`Get Cookie: ${req.cookies}`)
 })
 
 
