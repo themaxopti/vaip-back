@@ -127,7 +127,7 @@ exports.refresh = async (req, res) => {
             return res.json('Вы не авторизованы')
         }
 
-        const user = User.findById(userData.id)
+        const user = await User.findById(userData.id)
         const userDto = new UserDto(user)
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
