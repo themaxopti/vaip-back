@@ -58,7 +58,7 @@ exports.register = async (req, res) => {
 
         await panier.save()
 
-        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+        // res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
         res.status(201).json({
             message: "Пользователь создан",
             tokens: { ...tokens }
