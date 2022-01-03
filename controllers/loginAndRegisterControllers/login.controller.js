@@ -3,6 +3,8 @@ const { validationResult } = require('express-validator')
 const User = require('../../models/User')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const tokenService = require('../../services/token-service')
+const UserDto = require('../../dtos/user-dto')
 
 
 exports.login = async (req, res) => {
@@ -35,17 +37,18 @@ exports.login = async (req, res) => {
             })
         }
 
-        const token = jwt.sign(
-            { userId: user.id },
-            config.get('jwtSecret'),
-            { expiresIn: '1h' }
-        )
 
+        const userDto = new UserDto(user)
+        const tokens = tokenService.generateTokens({ ...userDto })
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-        res.cookie('token', token, { maxAge: 10 * 24 * 60 * 60 * 1000, httpOnly: true })
+        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+
 
         res.json({
-            token, userId: user.id,
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+            userId: user.id,
             userName: user.name,
             userEmail: user.email,
             father: user.father,
@@ -72,7 +75,7 @@ exports.auth = async (req, res) => {
 
 
         res.json({
-            token:req.cookies,
+            token: req.cookies,
             userId: user.id,
             userName: user.name,
             userEmail: user.email,
@@ -80,6 +83,59 @@ exports.auth = async (req, res) => {
             phone: user.phone,
             orders: user.orders,
             totalCount: user.totalCount
+        })
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
+
+
+exports.logOut = async (req, res) => {
+    try {
+        const {refreshToken} = req.cookies
+        const token = await tokenService.removeToken(refreshToken)
+        res.clearCookie('refreshToken')
+
+        res.json({
+            token  
+        })
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
+
+exports.refresh = async (req, res) => {
+    try {
+        const {refreshToken} = req.cookies
+        
+        if(!refreshToken){
+            return res.json({message:'Вы не авторизованы'})
+        }
+
+        const userData = tokenService.validateRefreshToken(refreshToken)
+        const tokenFromDb = tokenService.findToken(refreshToken)
+
+        if(!userData || !tokenFromDb){
+            return res.json('Вы не авторизованы')
+        }
+
+        const user = User.findById(userData.id)
+        const userDto = new UserDto(user)
+        const tokens = tokenService.generateTokens({ ...userDto })
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
+
+
+
+        res.json({
+            message:'Токен перезаписан'  
         })
 
     } catch (e) {

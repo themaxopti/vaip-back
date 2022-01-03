@@ -7,6 +7,8 @@ const config = require('config')
 
 const MailService = require('../../services/mailSevec/mailServece')
 const Panier = require('../../models/Pannier/Panier')
+const tokenService = require('../../services/token-service')
+const UserDto = require('../../dtos/user-dto')
 
 
 exports.register = async (req, res) => {
@@ -44,16 +46,22 @@ exports.register = async (req, res) => {
 
         await mailService.sendEmail(email, `${config.get('API_URL')}/api/activate/${secretLink}`)
 
+        const userDto = new UserDto(user)
+
+        const tokens = tokenService.generateTokens({ ...userDto })
+        await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
         const panier = new Panier({
             userId: user._id,
-            userName:user.name
+            userName: user.name
         })
 
         await panier.save()
 
+        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
         res.status(201).json({
-            message: "Пользователь создан"
+            message: "Пользователь создан",
+            tokens: { ...tokens }
         })
 
 
