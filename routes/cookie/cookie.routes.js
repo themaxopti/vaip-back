@@ -1,11 +1,12 @@
 const { Router } = require('express')
+const authMiddleware = require('../../middleware/auth.middleware')
 
 const router = Router()
 
 
-router.get('/getCookie', (req, res) => {
+router.get('/getCookie', authMiddleware, (req, res) => {
     console.log('Cookie: ', req.cookies)
-    res.send({cookie:req.cookies})
+    res.send({ cookie: req.cookies })
 })
 
 

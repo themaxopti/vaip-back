@@ -42,7 +42,7 @@ exports.login = async (req, res) => {
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true,secure: true  })
 
 
         res.json({
@@ -96,12 +96,12 @@ exports.auth = async (req, res) => {
 
 exports.logOut = async (req, res) => {
     try {
-        const {refreshToken} = req.cookies
+        const { refreshToken } = req.cookies
         const token = await tokenService.removeToken(refreshToken)
         res.clearCookie('refreshToken')
 
         res.json({
-            token  
+            token
         })
 
     } catch (e) {
@@ -114,16 +114,16 @@ exports.logOut = async (req, res) => {
 
 exports.refresh = async (req, res) => {
     try {
-        const {refreshToken} = req.cookies
-        
-        if(!refreshToken){
-            return res.status(401).json({message:'Вы не авторизованы',cookie:req.cookies})
+        const { refreshToken } = req.cookies
+
+        if (!refreshToken) {
+            return res.status(401).json({ message: 'Вы не авторизованы', cookie: req.cookies })
         }
 
         const userData = tokenService.validateRefreshToken(refreshToken)
         const tokenFromDb = tokenService.findToken(refreshToken)
 
-        if(!userData || !tokenFromDb){
+        if (!userData || !tokenFromDb) {
             return res.json('Вы не авторизованы')
         }
 
@@ -132,10 +132,11 @@ exports.refresh = async (req, res) => {
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-
+        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true  })
 
         res.json({
-            message:'Токен перезаписан',
+            message: 'Токен перезаписан',
+            accessToken: tokens.accessToken,
             userId: user._id,
             userName: user.name,
             userEmail: user.email,
