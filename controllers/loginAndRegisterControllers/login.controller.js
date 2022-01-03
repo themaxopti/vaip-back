@@ -135,7 +135,14 @@ exports.refresh = async (req, res) => {
 
 
         res.json({
-            message:'Токен перезаписан'  
+            message:'Токен перезаписан',
+            userId: user._id,
+            userName: user.name,
+            userEmail: user.email,
+            father: user.father,
+            phone: user.phone,
+            orders: user.orders,
+            totalCount: user.totalCount
         })
 
     } catch (e) {
