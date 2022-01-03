@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/getCookie', authMiddleware, (req, res) => {
     console.log('Cookie: ', req.cookies)
-    res.send({ cookie: req.cookies })
+    res.send({ cookie: req.signedCookies })
 })
 
 
