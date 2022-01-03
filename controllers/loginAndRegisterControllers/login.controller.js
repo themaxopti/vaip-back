@@ -117,7 +117,7 @@ exports.refresh = async (req, res) => {
         const {refreshToken} = req.cookies
         
         if(!refreshToken){
-            return res.status(401).json({message:'Вы не авторизованы'})
+            return res.status(401).json({message:'Вы не авторизованы',cookie:req.cookies})
         }
 
         const userData = tokenService.validateRefreshToken(refreshToken)
