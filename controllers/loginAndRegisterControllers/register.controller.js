@@ -13,9 +13,7 @@ const UserDto = require('../../dtos/user-dto')
 
 exports.register = async (req, res) => {
     try {
-        res.header('Access-Control-Allow-Origin', "*")
-        res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
-
+       
         const errors = validationResult(req)
 
         if (!errors.isEmpty()) {
@@ -56,6 +54,7 @@ exports.register = async (req, res) => {
 
         res.status(201).json({
             message: "Пользователь создан",
+            statusCode:201
          })
 
 
