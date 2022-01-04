@@ -46,10 +46,6 @@ exports.register = async (req, res) => {
 
         await mailService.sendEmail(email, `${config.get('API_URL')}/api/activate/${secretLink}`)
 
-        const userDto = new UserDto(user)
-
-        const tokens = tokenService.generateTokens({ ...userDto })
-        await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
         const panier = new Panier({
             userId: user._id,
@@ -58,7 +54,6 @@ exports.register = async (req, res) => {
 
         await panier.save()
 
-        // res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
         res.status(201).json({
             message: "Пользователь создан",
             tokens: { ...tokens }
