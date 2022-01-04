@@ -56,7 +56,6 @@ exports.register = async (req, res) => {
 
         res.status(201).json({
             message: "Пользователь создан",
-            tokens: { ...tokens }
          })
 
 
