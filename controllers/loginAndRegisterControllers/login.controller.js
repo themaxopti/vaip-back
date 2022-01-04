@@ -37,7 +37,7 @@ exports.login = async (req, res) => {
             })
         }
 
-
+ 
         const userDto = new UserDto(user)
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
@@ -140,6 +140,7 @@ exports.refresh = async (req, res) => {
             userId: user._id,
             userName: user.name,
             userEmail: user.email,
+            surrname:user.surname,
             father: user.father,
             phone: user.phone,
             orders: user.orders,
