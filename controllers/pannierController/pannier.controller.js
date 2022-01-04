@@ -16,8 +16,6 @@ exports.getPannierUser = async (req, res) => {
 
 
 
-
-
 exports.addProduct = async (req, res) => {
     try {
         const { productId } = req.params
@@ -29,7 +27,7 @@ exports.addProduct = async (req, res) => {
       
         if (!checkedProduct) return res.json({ message: "Такого товара нету в базе" })
 
-        const userId = req.user.userId
+        const userId = req.user.id
 
         const isPanier = await Panier.findOne({ userId, products: { $eq: productId } })
 
@@ -38,8 +36,6 @@ exports.addProduct = async (req, res) => {
         const countProduct = +checkedProduct.value
 
         const panier = await Panier.findOneAndUpdate({ userId }, { $push: { products: checkedProduct }, $inc: { totalCount: countProduct } }, { new: true })
-
-
 
         console.log(panier)
 
@@ -63,7 +59,7 @@ exports.deleteProduct = async (req, res) => {
 
         if (!checkedProduct) return res.json({ message: "Такого товара нету в базе" })
 
-        const userId = req.user.userId
+        const userId = req.user.id
 
         const isPanier = await Panier.findOne({ userId, products: { $eq: productId } })
 

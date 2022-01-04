@@ -5,7 +5,7 @@ const authMiddleware = require('../../middleware/auth.middleware')
 
 const router = Router()
 
-
+ 
 
 router.get('/pannier/:userId?', pannierController.getPannierUser)
 router.get('/pannier/addProduct/:productId?', authMiddleware, pannierController.addProduct)
