@@ -20,7 +20,6 @@ class MailService {
 
 
     async sendEmail(to, link) {
-        let testEmailAccount = await nodemailer.createTestAccount()
 
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
