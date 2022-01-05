@@ -144,7 +144,8 @@ exports.refresh = async (req, res) => {
             father: user.father,
             phone: user.phone,
             orders: user.orders,
-            totalCount: user.totalCount
+            totalCount: user.totalCount,
+            isActivated:user.isActivated
         })
 
     } catch (e) {
