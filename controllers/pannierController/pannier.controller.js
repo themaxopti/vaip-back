@@ -29,7 +29,7 @@ exports.addProduct = async (req, res) => {
 
         const userId = req.user.id
 
-        const isPanier = await Panier.findOne({ userId, products: { $eq: productId } })
+        const isPanier = await Panier.findOne({ userId, products: { $eq: checkedProduct } })
 
         if (isPanier) return res.json({ message: "Такой товар в корзине уже есть" })
 
