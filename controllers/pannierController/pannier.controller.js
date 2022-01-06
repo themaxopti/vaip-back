@@ -1,4 +1,5 @@
 const Panier = require('../../models/Pannier/Panier')
+const MailService = require('../../services/mailSevec/mailServece')
 const ProductService = require('../../services/productService/ProductService')
 
 exports.getPannierUser = async (req, res) => {
@@ -114,6 +115,16 @@ exports.showPanierProducts = async (req, res) => {
         res.json(panier)
 
     } catch (e) {
+        console.log(e)
+    }
+}
+
+exports.buyProduct = async (req,res) => {
+    try{    
+        const mailService = new MailService()
+        mailService.sendEmailToBuy()
+        res.json({message:'Сообщение отправлено'})
+    }catch(e){
         console.log(e)
     }
 }
