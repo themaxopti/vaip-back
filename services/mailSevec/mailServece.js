@@ -54,7 +54,7 @@ class MailService {
 
 
 
-    async sendEmailToBuy(to, link) {
+    async sendEmailToBuy(to) {
 
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',

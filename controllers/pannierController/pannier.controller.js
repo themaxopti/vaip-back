@@ -121,8 +121,9 @@ exports.showPanierProducts = async (req, res) => {
 
 exports.buyProduct = async (req,res) => {
     try{    
+        const {email} = req.user
         const mailService = new MailService()
-        mailService.sendEmailToBuy()
+        mailService.sendEmailToBuy(email)
         res.json({message:'Сообщение отправлено'})
     }catch(e){
         console.log(e)
