@@ -123,7 +123,7 @@ exports.buyProduct = async (req,res) => {
     try{    
         const {email} = req.user
         const mailService = new MailService()
-        mailService.sendEmailToBuy(email)
+        await mailService.sendEmailToBuy(email)
         res.json({message:'Сообщение отправлено'})
     }catch(e){
         console.log(e)
