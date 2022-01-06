@@ -121,10 +121,11 @@ exports.showPanierProducts = async (req, res) => {
 
 exports.buyProduct = async (req,res) => {
     try{    
-        const {email} = req.user
-        const mailService = new MailService()
-        await mailService.sendEmailToBuy(email)
-        res.json({message:'Сообщение отправлено'})
+        // const {email} = req.user
+        // const mailService = new MailService()
+        console.log('============================')
+        // await mailService.sendEmailToBuy('email@gmail.com')
+        // res.json({message:'Сообщение отправлено'})
     }catch(e){
         console.log(e)
     }

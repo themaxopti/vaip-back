@@ -22,6 +22,7 @@ app.use('/api/', require('./routes/loginAndRegister/login.routes'))
 app.use('/api/', require('./routes/products/products.routes'))
 app.use('/api/', require('./routes/pannier/pannier.routes'))
 app.use('/api/', require('./routes/cookie/cookie.routes'))
+app.use('/api/', require('./routes/buy/buy.routes'))
 // ROUTES
 
 

@@ -98,7 +98,7 @@ exports.logOut = async (req, res) => {
     try {
         const { refreshToken } = req.cookies
         const token = await tokenService.removeToken(refreshToken)
-        res.clearCookie('refreshToken')
+        res.clearCookie('refreshToken',{secure:true,sameSite: 'none'})
 
         res.json({
             token
