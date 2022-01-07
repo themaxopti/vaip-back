@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 
 const app = express()
 
-app.use(Cors({ credentials: true, origin: 'http://localhost:3000' }))
+app.use(Cors({ credentials: true, origin: 'https://nosigarets.vercel.app' }))
 app.use(express.json({ extended: true }))
 app.use(cookieParser())
 
