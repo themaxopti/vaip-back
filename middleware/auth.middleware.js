@@ -10,10 +10,10 @@ module.exports = (req, res, next) => {
     try {
         const authorizationHeader = req.headers.authorization
 
-        const accessToken = authorizationHeader.split(' ')[1]
 
-        if(!accessToken){
-            return res.status(401).json({message:'Вы не авторизованы'})
+
+        if (!accessToken) {
+            return res.status(401).json({ message: 'Вы не авторизованы' })
         }
 
         const decoded = jwt.verify(accessToken, config.get('jwtSecret'))
@@ -21,6 +21,6 @@ module.exports = (req, res, next) => {
         req.user = decoded
         next()
     } catch (e) {
-        return res.status(401).json({ message: 'Что-то пошло не так с авторизацией'})
+        return res.status(401).json({ message: 'Что-то пошло не так с авторизацией' })
     }
 }
