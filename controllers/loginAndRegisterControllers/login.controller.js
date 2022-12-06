@@ -36,12 +36,12 @@ exports.login = async (req, res) => {
             })
         }
 
- 
+
         const userDto = new UserDto(user)
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true,secure:true,sameSite: 'none' })
+        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'none' })
 
 
         res.json({
@@ -97,7 +97,7 @@ exports.logOut = async (req, res) => {
     try {
         const { refreshToken } = req.cookies
         const token = await tokenService.removeToken(refreshToken)
-        res.clearCookie('refreshToken',{httpOnly: true,secure:true,sameSite: 'none'})
+        res.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'none' })
 
         res.json({
             token
@@ -107,6 +107,8 @@ exports.logOut = async (req, res) => {
         console.log(e)
     }
 }
+
+// 222
 
 
 
@@ -131,7 +133,7 @@ exports.refresh = async (req, res) => {
         const tokens = tokenService.generateTokens({ ...userDto })
         await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
-        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true,secure:true,sameSite: 'none'  })
+        res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'none' })
 
         res.json({
             message: 'Токен перезаписан',
@@ -139,12 +141,12 @@ exports.refresh = async (req, res) => {
             userId: user._id,
             userName: user.name,
             userEmail: user.email,
-            surrname:user.surname,
+            surrname: user.surname,
             father: user.father,
             phone: user.phone,
             orders: user.orders,
             totalCount: user.totalCount,
-            isActivated:user.isActivated
+            isActivated: user.isActivated
         })
 
     } catch (e) {
